@@ -7,19 +7,22 @@ import { StartContext } from '../store/start-context';
 export default function HabitsTable() {
   const { start } = useContext(StartContext);
 
+  const end = new Date(start);
+  end.setDate(end.getDate() + 6);
+  const dates = generateDatesInRange(start, end);
+
   const [habits, setHabits] = useState([
     {
       name: 'first habit',
+      daysFulfilled: ['2026-01-06'],
     },
     {
       name: 'second habit',
+      daysFulfilled: [],
     },
   ]);
 
-  const dates = generateDatesInRange(
-    start,
-    new Date().setDate(start.getDate() + 7)
-  );
+  const isInRange = currentDate => currentDate <= end && currentDate >= start;
 
   return (
     <div className="overflow-x-auto">
@@ -43,6 +46,17 @@ export default function HabitsTable() {
                 <td className="border p-2 text-center">
                   <Habit name={habit.name} />
                 </td>
+                {dates.map(date => {
+                  <td key={date} className="border p-2 text-center">
+                    {/* {console.log(date.getFullYear())} */}
+                    {console.log(date.toLocaleDateString('en-ca'))}
+                    {console.log(
+                      habit.daysFulfilled.includes(
+                        date.toLocaleDateString('en-ca')
+                      )
+                    )}
+                  </td>;
+                })}
               </tr>
             );
           })}
