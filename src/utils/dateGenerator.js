@@ -1,23 +1,20 @@
-export const generateDatesInRange = (
-  start = "2026-01-01",
-  end = "2026-02-28"
-) => {
+export const generateDatesInRange = (start, end) => {
   const dates = [];
-  let startDate = new Date(start);
-  const endDate = new Date(end);
+  const day = new Date(start);
 
-  while (startDate <= endDate) {
-    dates.push(new Date(startDate));
-    startDate.setDate(startDate.getDate() + 1);
+  while (day <= end) {
+    dates.push(new Date(day));
+    day.setDate(day.getDate() + 1);
   }
 
   return dates;
 };
 
-export const formatDate = (date) => {
-  return date.toLocaleDateString("en-GB", {
-    weekday: "long",
-    day: "numeric",
-    month: "short",
+export const formatDate = date => {
+  return date.toLocaleDateString('en-GB', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
   });
 };

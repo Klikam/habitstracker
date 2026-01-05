@@ -1,12 +1,13 @@
-import Habit from "./components/Habit";
-import HabitsTable from "./components/HabitsTable";
+import HabitsTable from './components/HabitsTable';
+import Navigation from './components/Navigation';
+import StartContextProvider from './store/start-context-provider';
 
 function App() {
   return (
-    <>
-      <h1>Habits tracker</h1>
+    <StartContextProvider>
+      <Navigation />
       <HabitsTable />
-    </>
+    </StartContextProvider>
   );
 }
 

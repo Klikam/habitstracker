@@ -4,7 +4,7 @@ export default function Habit({ name }) {
   return (
     <div>
       <label htmlFor={nameId}>{name}</label>
-      <input type="checkbox" name={nameId} />
+      {/* <input type="checkbox" name={nameId} /> */}
     </div>
   );
 }
