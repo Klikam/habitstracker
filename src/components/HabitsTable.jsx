@@ -47,15 +47,16 @@ export default function HabitsTable() {
                   <Habit name={habit.name} />
                 </td>
                 {dates.map(date => {
-                  <td key={date} className="border p-2 text-center">
-                    {/* {console.log(date.getFullYear())} */}
-                    {console.log(date.toLocaleDateString('en-ca'))}
-                    {console.log(
-                      habit.daysFulfilled.includes(
-                        date.toLocaleDateString('en-ca')
-                      )
-                    )}
-                  </td>;
+                  return (
+                    <td key={date} className="border p-2 text-center">
+                      <input
+                        type="checkbox"
+                        checked={habit.daysFulfilled.includes(
+                          date.toLocaleDateString('en-ca')
+                        )}
+                      />
+                    </td>
+                  );
                 })}
               </tr>
             );
