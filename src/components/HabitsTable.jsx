@@ -22,7 +22,20 @@ export default function HabitsTable() {
     },
   ]);
 
-  const isInRange = currentDate => currentDate <= end && currentDate >= start;
+  function handleChange(date, affectedHabit) {
+    console.log(`In hangleChange: ${date}, ${affectedHabit}`);
+    setHabits(prev =>
+      prev.map(habit => {
+        if (habit.name === affectedHabit) {
+          return {
+            ...habit,
+            daysFulfilled: Array.from(new Set([...habit.daysFulfilled, date])),
+          };
+        }
+        return habit;
+      })
+    );
+  }
 
   return (
     <div className="overflow-x-auto">
@@ -41,6 +54,7 @@ export default function HabitsTable() {
         </thead>
         <tbody>
           {habits.map(habit => {
+            console.log(habit.daysFulfilled);
             return (
               <tr key={habit.name} className="hover:bg-gray-50">
                 <td className="border p-2 text-center">
@@ -48,12 +62,21 @@ export default function HabitsTable() {
                 </td>
                 {dates.map(date => {
                   return (
-                    <td key={date} className="border p-2 text-center">
+                    <td
+                      key={habit.name + date}
+                      className="border p-2 text-center"
+                    >
                       <input
                         type="checkbox"
                         checked={habit.daysFulfilled.includes(
                           date.toLocaleDateString('en-ca')
                         )}
+                        onChange={() =>
+                          handleChange(
+                            date.toLocaleDateString('en-ca'),
+                            habit.name
+                          )
+                        }
                       />
                     </td>
                   );
