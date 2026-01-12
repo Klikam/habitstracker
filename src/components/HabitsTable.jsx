@@ -22,15 +22,24 @@ export default function HabitsTable() {
     },
   ]);
 
-  function handleChange(date, affectedHabit) {
+  function handleChange(date, affectedHabit, event) {
     console.log(`In hangleChange: ${date}, ${affectedHabit}`);
     setHabits(prev =>
       prev.map(habit => {
         if (habit.name === affectedHabit) {
-          return {
-            ...habit,
-            daysFulfilled: Array.from(new Set([...habit.daysFulfilled, date])),
-          };
+          if (event.target.checked) {
+            return {
+              ...habit,
+              daysFulfilled: Array.from(
+                new Set([...habit.daysFulfilled, date])
+              ),
+            };
+          } else {
+            return {
+              ...habit,
+              daysFulfilled: habit.daysFulfilled.filter(day => day !== date),
+            };
+          }
         }
         return habit;
       })
@@ -71,10 +80,11 @@ export default function HabitsTable() {
                         checked={habit.daysFulfilled.includes(
                           date.toLocaleDateString('en-ca')
                         )}
-                        onChange={() =>
+                        onChange={e =>
                           handleChange(
                             date.toLocaleDateString('en-ca'),
-                            habit.name
+                            habit.name,
+                            e
                           )
                         }
                       />
